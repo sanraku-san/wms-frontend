@@ -1,8 +1,28 @@
 import { useState } from "react";
 import { FaSearch, FaFilter } from "react-icons/fa";
 import Table from "../components/Table";
+import AddProduct from "../modals/AddProduct";
 
 export default function Inventory() {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [products, setProducts] = useState([
+    {
+    },
+  ]);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleAddProduct = (newProduct) => {
+    setProducts([...products, newProduct]);
+    handleCloseModal();
+  };
+
   return (
     <div className="h-screen p-5 flex">
       <div className="w-full p-5 border-1  rounded">
@@ -45,15 +65,26 @@ export default function Inventory() {
                 </select>
               </div>
             </div>
-            <div className="bg-green-600 text-white rounded p-1.5 hover:bg-green-500 hover:active:bg-green-200">
-              <button>Add Product</button>
+            <div className="">
+              <button
+                className="bg-green-600 text-white rounded p-1.5 hover:bg-green-500 hover:active:bg-green-200"
+                onClick={handleOpenModal}
+              >
+                Add Product
+              </button>
+              {isModalOpen && (
+                <AddProduct
+                  isOpen={isModalOpen}
+                  onClose={handleCloseModal}
+                  onAddProduct={handleAddProduct}
+                />
+              )}
             </div>
           </div>
-          <div>    
-          </div>
+          <div></div>
         </div>
-        <div className="">
-          <Table />
+        <div className="mt-4">
+          <Table products={products} />
         </div>
       </div>
     </div>

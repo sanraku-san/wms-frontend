@@ -1,7 +1,8 @@
-import React from 'react'
-import fan from '../media/fan.png'
+import React, { useState } from 'react';
 
-export default function Table() {
+export default function Table({ products }) {
+  const [actions,setActions]=useState({
+  })
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200">
@@ -11,26 +12,30 @@ export default function Table() {
             <th className="px-4 py-2 border-b text-left">Category</th>
             <th className="px-4 py-2 border-b text-left">Barcode</th>
             <th className="px-4 py-2 border-b text-left">Incoming</th>
-            <th className="px-4 py-2 border-b text-left">Stock Unit</th>
+            <th className="px-4 py-2 border-b text-left">Stock</th>
+            <th className="px-4 py-2 border-b text-left">Unit Price</th>
             <th className="px-4 py-2 border-b text-left">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="px-4 py-2 border-b">
-              <img src={fan} alt="Item" className="w-16 h-16 object-cover" />
-              Electric Fan
-            </td>
-            <td className="px-4 py-2 border-b">Category Name</td>
-            <td className="px-4 py-2 border-b">123456789</td>
-            <td className="px-4 py-2 border-b">10</td>
-            <td className="px-4 py-2 border-b">50</td>
-            <td className="px-4 py-2 border-b">
-              <button className="border-gray-400 text-4xl">...</button>
-            </td>
-          </tr>
+          {products.map((product, index) => (
+            <tr key={index}>
+              <td className="px-4 py-2 border-b flex items-center">
+                <img src={product.image} alt="Item" className="w-16 h-16 object-cover mr-4" />
+                <div>{product.name}</div>
+              </td>
+              <td className="px-4 py-2 border-b">{product.category}</td>
+              <td className="px-4 py-2 border-b">{product.barcode}</td>
+              <td className="px-4 py-2 border-b">{product.incoming}</td>
+              <td className="px-4 py-2 border-b">{product.stock}</td>
+              <td className="px-4 py-2 border-b">{product.unitPrice}</td>
+              <td className="px-4 py-2 border-b">
+                <button  className="border-gray-400 text-4xl text-center">...</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
-  )
+  );
 }
