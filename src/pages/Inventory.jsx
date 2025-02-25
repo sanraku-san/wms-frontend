@@ -5,6 +5,7 @@ import AddProduct from "../modals/AddProduct";
 
 export default function Inventory() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [filter,setFilter]=useState();
   const [products, setProducts] = useState([
     {
     },
@@ -21,6 +22,22 @@ export default function Inventory() {
   const handleAddProduct = (newProduct) => {
     setProducts([...products, newProduct]);
     handleCloseModal();
+  };
+  const onFilter = () => {
+    const nextFilter = filter === "price" ? "name" : filter === "name" ? "quantity" : filter === "quantity" ? "time" : "price";
+    setFilter(nextFilter);
+  };
+  const getFilterText = () => {
+    switch (filter) {
+      case "name":
+        return "by Name";
+      case "quantity":
+        return "by Quantity";
+      case "time":
+        return "by Time";
+      default:
+        return "by Price";
+    }
   };
 
   return (
@@ -46,17 +63,12 @@ export default function Inventory() {
                 <input type="text" placeholder="search for inventory" />
               </div>
               <div className="flex items-center gap-0.5 text-gray-700 ml-7">
-                <div>
+                <div className="flex items-center mr-2 hover:bg-gray-500 gap-1.5 rounded-2xl p-2">
                   <FaFilter />
-                </div>
-                <select name="Filter" className="hover:bg-gray-500">
-                  <option value="">Filter</option>
-                  <option value="price">Price</option>
-                  <option value="stock_level">Stock Level</option>
-                  <option value="date">Date</option>
-                </select>
+                
+                <button onClick={onFilter}>{getFilterText()}</button></div>
               </div>
-              <div className="text-gray-700 hover:bg-gray-500">
+              <div className="text-gray-700 hover:bg-gray-500 rounded-2xl p-2">
                 <select name="Filter">
                   <option value="">Category</option>
                   <option value="price">Price</option>
